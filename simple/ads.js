@@ -57,20 +57,20 @@ function setUpIMA() {
   }
 
   const vmapXml = getVmapXml([{
-    aid: 331133,
+    aid: 877603,
     timeOffset: 'start',
     ...playerRuntimeParams
   },{
-    aid: 331133,
+    aid: 877604,
     timeOffset: '00:00:10',
     ...playerRuntimeParams
   },{
-    aid: 331133,
+    aid: 877605,
     timeOffset: 'end',
     ...playerRuntimeParams
   }]);
-
-  adsRequest.adsResponse = vmapXml;
+  console.log(vmapXml)
+  adsRequest.adTagUrl = vmapXml;
 
   // Specify the linear and nonlinear slot sizes. This helps the SDK to
   // select the correct creative if multiple are returned.
