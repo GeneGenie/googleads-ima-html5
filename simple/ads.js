@@ -1,7 +1,4 @@
-// Copyright 2013 Google Inc. All Rights Reserved.
-// You may study, modify, and use this example for any purpose.
-// Note that this example is provided "as is", WITHOUT WARRANTY
-// of any kind either expressed or implied.
+import { getVmapXml } from "./adtelligent.js";
 
 let adsManager;
 let adsLoader;
@@ -50,10 +47,30 @@ function setUpIMA() {
 
   // Request video ads.
   const adsRequest = new google.ima.AdsRequest();
-  adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?' +
-      'iu=/21775744923/external/single_ad_samples&sz=640x480&' +
-      'cust_params=sample_ct%3Dlinear&ciu_szs=300x250%2C728x90&gdfp_req=1&' +
-      'output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=';
+
+  const playerRuntimeParams= {
+    // get those from player runtime
+    width: 640,
+    height: 480,
+    video_duration: 300,
+    content_page_url: 'https://test.com' // optional override
+  }
+
+  const vmapXml = getVmapXml([{
+    aid: 331133,
+    timeOffset: 'start',
+    ...playerRuntimeParams
+  },{
+    aid: 331133,
+    timeOffset: '00:00:10',
+    ...playerRuntimeParams
+  },{
+    aid: 331133,
+    timeOffset: 'end',
+    ...playerRuntimeParams
+  }]);
+
+  adsRequest.adsResponse = vmapXml;
 
   // Specify the linear and nonlinear slot sizes. This helps the SDK to
   // select the correct creative if multiple are returned.
